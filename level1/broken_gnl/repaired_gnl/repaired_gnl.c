@@ -67,7 +67,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-
 char	*get_next_line(int fd)
 {
 	static char	b[BUFFER_SIZE + 1] = "";
@@ -81,7 +80,10 @@ char	*get_next_line(int fd)
 		b[0] = '\0';
 		int	read_ret = read(fd, b, BUFFER_SIZE);
 		if (read_ret == -1)
+		{
+			free(ret);
 			return (NULL);
+		}		
 		if (read_ret == 0)
             break;
 		b[read_ret] = 0;

@@ -1,57 +1,74 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-
-void	printSubset(int *arr, int *path, int len)
+int ft_abs(int n)
 {
-	int index = -1;
-	int first = 1;
+	if( n< 0)
+		return -n;
+	return n;
+}
+int is_safe(int* board,int col, int row)
+{
+	int prev=0;
 
-	while (++index < len)
+	while( prev < col)
 	{
-		if (path[index])
-		{
-			if (!first)
-				printf(" ");
-			printf("%d", arr[index]);
-			first = 0;
-		}
+		if (board[prev]== row)
+			return 0;
+		if (ft_abs(board[prev]-row)== col -prev)
+			return 0;
+		prev++;
 	}
-	printf("\n");
+	return 1;
 }
 
-void	backtrack(int *arr, int *path, int len, int idx, int sum, int target)
+void print_solution(int* board,int n)
 {
-	if (idx == len)
+	int i = 0;
+	
+	while(i < n)
 	{
-		if (sum == target)
-		{
-			printSubset(arr, path, len);
-		}
+		fprintf(stdout, "%d", board[i]);
+		if(i < n-1)
+			fprintf(stdout," ");
+		i++;
+	}
+	fprintf(stdout, "\n");
+}
+
+void solve(int * board,int col, int n)
+{
+	int row=0;
+	if(col ==n)
+	{
+		print_solution(board,n);
 		return;
 	}
-	path[idx] = 1;
-	backtrack(arr, path, len, idx + 1, sum + arr[idx], target);
-	path[idx] = 0;
-	backtrack(arr, path, len, idx + 1, sum, target);
+	while (row < n)
+	{
+		if( is_safe(board,col,row))
+		{
+			board [col]= row;
+			solve(board,col+1,n);
+		}
+		row++;
+	}
 }
 
-int	main(int argc, char *argv[])
-{
-	if (argc < 2)
-		return (1);
-	int index = -1;
-	int target = atoi(argv[1]);
-	int len = argc - 2;
-	int *arr = malloc(sizeof(int) * len);
-	int *path = malloc(sizeof(int) * len);
-	if (!arr || !path)
-		return (1);
-	while (++index < len)
-		arr[index] = atoi(argv[index + 2]);
 
-	backtrack(arr, path, len, 0, 0, target);
-	free(arr);
-	free(path);
-	return (0);
+int main(int ac, char* av[])
+{
+	int n;
+	int *board;
+	
+	if(ac != 2)
+		return 1;
+	n= atoi(av[1]);
+	if(n <=0)
+		return 1;
+	board =malloc(sizeof(int) *n);
+	if(!board)
+		return 1;
+	solve(board,0,n);
+	free(board);
 }

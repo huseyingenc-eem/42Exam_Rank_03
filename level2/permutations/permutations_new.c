@@ -49,9 +49,8 @@ int	main(int ac, char **av)
 {
 	char	s[1024];
 	char	buf[1024];
-	int		used[1024];
+	int		used[1024] = {0};
 	int		len;
-	int		i;
 
 	if (ac != 2)
 		return (1);
@@ -62,9 +61,6 @@ int	main(int ac, char **av)
 		len++;
 	}
 	s[len] = '\0';
-	i = -1;
-	while (++i < len)
-		used[i] = 0;
 	ft_sort(s, len);
 	backtrack(s, buf, used, 0, len);
 	return (0);

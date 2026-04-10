@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	print_subset(int *arr, int *path, int len)
+void print_subset(int *arr, int *path, int len)
 {
 	int i = -1;
 	int first = 1;
@@ -25,7 +25,7 @@ void backtrack(int *arr, int *path, int len, int idx, int sum, int target)
 	{
 		if (sum == target)
 			print_subset(arr, path, len);
-		return ;
+		return;
 	}
 	path[idx] = 1;
 	backtrack(arr, path, len, idx + 1, sum + arr[idx], target);
@@ -33,16 +33,15 @@ void backtrack(int *arr, int *path, int len, int idx, int sum, int target)
 	backtrack(arr, path, len, idx + 1, sum, target);
 }
 
-
-int	main(int ac, char *av[])
+int main(int ac, char *av[])
 {
 	if (ac < 2)
 		return (1);
-	int	i = -1;
-	int	target = atoi(av[1]);
-	int	len = ac - 2;
-	int	*arr = malloc(sizeof(int) * len);
-	int	*path = calloc(len, sizeof(int));
+	int i = -1;
+	int target = atoi(av[1]);
+	int len = ac - 2;
+	int *arr = malloc(sizeof(int) * len);
+	int *path = calloc(len, sizeof(int));
 	if (!arr || !path)
 		return (1);
 	while (++i < len)

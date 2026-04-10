@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-void	print_subset(int *arr, int *path, int len)
+void print_subset(int *arr, int *path, int len)
 {
 	int i = -1;
 	int first = 1;
@@ -12,7 +11,7 @@ void	print_subset(int *arr, int *path, int len)
 		if (path[i])
 		{
 			if (!first)
-				prinf(" ");
+				printf(" ");
 			printf("%d", arr[i]);
 			first = 0;
 		}
@@ -20,13 +19,13 @@ void	print_subset(int *arr, int *path, int len)
 	printf("\n");
 }
 
-void	backtrack(int *arr, int *path, int len, int idx, int sum, int target)
+void backtrack(int *arr, int *path, int len, int idx, int sum, int target)
 {
 	if (len == idx)
 	{
 		if (sum == target)
 			print_subset(arr, path, len);
-		return ;
+		return;
 	}
 	path[idx] = 1;
 	backtrack(arr, path, len, idx + 1, sum + arr[idx], target);
@@ -34,7 +33,7 @@ void	backtrack(int *arr, int *path, int len, int idx, int sum, int target)
 	backtrack(arr, path, len, idx + 1, sum, target);
 }
 
-int	main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	if (argc < 2)
 		return (1);
@@ -43,9 +42,9 @@ int	main(int argc, char *argv[])
 	int len = argc - 2;
 	int *arr = malloc(sizeof(int) * len);
 	int *path = calloc(len, sizeof(int));
-	if (!arr | !path)
+	if (!arr || !path)
 		return (1);
-	while (i++ < len)
+	while (++i < len)
 		arr[i] = atoi(argv[i + 2]);
 	backtrack(arr, path, len, 0, 0, target);
 	free(arr);
